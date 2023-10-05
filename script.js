@@ -33,6 +33,13 @@ function outputScores(scores) {
   console.log("Game over! Final score: ");
   console.log("Player: " + scores.player);
   console.log("Computer: " + scores.computer);
+  if (scores.player === scores.computer) {
+    console.log("Its a draw!");
+  } else if (scores.player > scores.computer) {
+    console.log("Player wins!");
+  } else {
+    console.log("Computer wins!");
+  }
 }
 
 function game() {
