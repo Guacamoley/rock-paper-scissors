@@ -1,5 +1,3 @@
-console.log("Hello");
-
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissors"];
   const randomIndex = Math.floor(Math.random() * choices.length);
@@ -7,7 +5,7 @@ function getComputerChoice() {
   return randomChoice;
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection, scores) {
   // Change output to lower case for easier comparison
   let lowercasePlayer = playerSelection.toLowerCase();
   let lowercaseComputer = computerSelection.toLowerCase();
@@ -23,15 +21,23 @@ function playRound(playerSelection, computerSelection) {
     let message =
       "You lose! " + lowercaseComputer + " beats " + lowercasePlayer;
     console.log(message);
+    scores.computer++;
   } else {
     let message = "You win! " + lowercasePlayer + " beats " + lowercaseComputer;
     console.log(message);
+    scores.player++;
   }
+}
+
+function outputScores(scores) {
+  console.log("Game over! Final score: ");
+  console.log("Player: " + scores.player);
+  console.log("Computer: " + scores.computer);
 }
 
 function game() {
   let round = 0;
-
+  const scores = { player: 0, computer: 0 };
   while (round < 5) {
     let playerResponse = prompt(
       "Please pick between Rock, Paper, or Scissors"
@@ -41,12 +47,14 @@ function game() {
       playerResponse === "paper" ||
       playerResponse === "scissors"
     ) {
-      playRound(playerResponse, getComputerChoice());
+      playRound(playerResponse, getComputerChoice(), scores);
       round++;
     } else {
       alert("Invalid choice. Please pick Rock, Paper, or Scissors.");
     }
   }
+
+  outputScores(scores);
 }
 
 game();
