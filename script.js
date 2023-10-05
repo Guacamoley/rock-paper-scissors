@@ -13,21 +13,25 @@ function playRound(playerSelection, computerSelection) {
   let lowercaseComputer = computerSelection.toLowerCase();
 
   if (lowercasePlayer === lowercaseComputer) {
-    response = "Its a draw!";
-    return;
-  } else if (lowercasePlayer === "rock" && lowercaseComputer === "paper") {
-    return false;
-  } else if (lowercasePlayer === "paper" && lowercaseComputer === "scissors") {
-    return false;
-  } else if (lowercasePlayer === "scissors" && lowercaseComputer === "rock") {
-    return false;
+    let message = "It's a draw! You both chose " + lowercasePlayer;
+    console.log(message);
+  } else if (
+    (lowercasePlayer === "rock" && lowercaseComputer === "paper") ||
+    (lowercasePlayer === "scissors" && lowercaseComputer === "rock") ||
+    (lowercasePlayer === "paper" && lowercaseComputer === "scissors")
+  ) {
+    let message =
+      "You lose! " + lowercaseComputer + " beats " + lowercasePlayer;
+    console.log(message);
   } else {
-    return true;
+    let message = "You win! " + lowercasePlayer + " beats " + lowercaseComputer;
+    console.log(message);
   }
 }
 
 function game() {
   let round = 0;
+
   while (round < 5) {
     let playerResponse = prompt(
       "Please pick between Rock, Paper, or Scissors"
