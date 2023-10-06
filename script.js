@@ -1,3 +1,5 @@
+const readline = require("readline");
+
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissors"];
   const randomIndex = Math.floor(Math.random() * choices.length);
@@ -45,23 +47,39 @@ function outputScores(scores) {
 function game() {
   let round = 0;
   const scores = { player: 0, computer: 0 };
-  while (round < 5) {
-    let playerResponse = prompt(
-      "Please pick between Rock, Paper, or Scissors"
-    ).toLowerCase();
-    if (
-      playerResponse === "rock" ||
-      playerResponse === "paper" ||
-      playerResponse === "scissors"
-    ) {
-      playRound(playerResponse, getComputerChoice(), scores);
-      round++;
-    } else {
-      alert("Invalid choice. Please pick Rock, Paper, or Scissors.");
-    }
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  function playNextRound() {
+    rl.question(
+      "Please pick between Rock, Paper, or Scissors: ",
+      (playerResponse) => {
+        playerResponse = playerResponse.toLowerCase();
+        if (["rock", "paper", "scissors"].includes(playerResponse)) {
+          const computerChoice = getComputerChoice();
+          playRound(playerResponse, computerChoice, scores);
+          round++;
+
+          if (round < 5) {
+            playNextRound();
+          } else {
+            rl.close();
+            console.log("Game over! Final score:");
+            console.log("Player: " + scores.player);
+            console.log("Computer: " + scores.computer);
+          }
+        } else {
+          console.log("Invalid choice. Please pick Rock, Paper, or Scissors.");
+          playNextRound();
+        }
+      }
+    );
   }
 
-  outputScores(scores);
+  playNextRound();
 }
 
 game();
